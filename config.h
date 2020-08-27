@@ -84,7 +84,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	// "Real" keybindings
-	{ MODKEY,             XK_m,      spawn,          {.v = dmenucmd } },
+	{ MODKEY|ShiftMask,             XK_Return,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,												XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,             XK_q,			 quit,           {0} },
 	{ MODKEY,												XK_q,			 killclient,		 {0} },
