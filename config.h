@@ -1,7 +1,5 @@
 /* See LICENSE file for copyright and license details. */
 
-// #include "shiftview.c"
-
 /* appearance */
 static const unsigned int borderpx  = 3;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -46,7 +44,6 @@ static const Layout layouts[] = {
 };
 
 /* key definitions */
-//TODO: 4 or 1?
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
@@ -98,8 +95,8 @@ static Key keys[] = {
 	{ MODKEY,												XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,             XK_q,			 quit,           {0} },
 	{ MODKEY,												XK_q,			 killclient,		 {0} },
-//	{ MODKEY,												XK_Page_Up,	shiftview,	{ .i = -1 } },
-//	{ MODKEY,												XK_Page_Down,	shiftview,	{ .i = +1 } },
+	{ MODKEY,												XK_Page_Up,	shiftview,	{ .i = -1 } },
+	{ MODKEY,												XK_Page_Down,	shiftview,	{ .i = +1 } },
 	{ MODKEY,                       XK_Left,	 focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_Right,  focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_Up,   focusstack,     {.i = +1 } },
