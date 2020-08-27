@@ -27,6 +27,8 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
+
+	//{ "",     NULL,       NULL,       0,            1,           -1 },
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 };
@@ -64,7 +66,6 @@ static Key keys[] = {
 //	{ MODKEY,                       XK_Return, zoom,           {0} },
 	// { MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	// { MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	// { MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	// { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
@@ -100,6 +101,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      setmfact,       {.f = +0.01} },
 	{ MODKEY,                       XK_equal,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_minus,      incnmaster,     {.i = -1 } },
+	//{ MODKEY,                       XK_f,  setlayout,      {0} },
+	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[2]} },
 };
 
 /* button definitions */
