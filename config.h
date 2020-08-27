@@ -42,7 +42,7 @@ static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "tile",      tile },    /* first entry is default */
 	{ "desktop",      NULL },    /* no layout function means floating behavior */
-	{ "monocle",      monocle },
+	{ "fullscreen",      monocle },
 };
 
 /* key definitions */
@@ -65,7 +65,7 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 //	{ MODKEY,                       XK_Return, zoom,           {0} },
 	// { MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+// 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	// { MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	// { MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	// { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
