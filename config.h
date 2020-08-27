@@ -69,8 +69,8 @@ static Key keys[] = {
 	// { MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	// { MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	// { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	// { MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	// { MODKEY,                       XK_period, focusmon,       {.i = +1 } },
+	//{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
+//	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	// { MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	// { MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 	////
@@ -84,7 +84,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	// "Real" keybindings
-	{ MODKEY|ShiftMask,             XK_Return,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,             XK_m,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,												XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,             XK_q,			 quit,           {0} },
 	{ MODKEY,												XK_q,			 killclient,		 {0} },
@@ -103,6 +103,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_minus,      incnmaster,     {.i = -1 } },
 	//{ MODKEY,                       XK_f,  setlayout,      {0} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,												XK_space,	zoom,		{0} },
 };
 
 /* button definitions */
