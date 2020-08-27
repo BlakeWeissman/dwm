@@ -100,8 +100,10 @@ static Key keys[] = {
 	{ MODKEY,												XK_q,			 killclient,		 {0} },
 //	{ MODKEY,												XK_Page_Up,	shiftview,	{ .i = -1 } },
 //	{ MODKEY,												XK_Page_Down,	shiftview,	{ .i = +1 } },
-	{ MODKEY,                       XK_Left,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_Right,      focusstack,     {.i = -1 } },
+	{ MODKEY,                       XK_Left,	 focusstack,     {.i = +1 } },
+	{ MODKEY,                       XK_Right,  focusstack,     {.i = -1 } },
+	{ MODKEY,                       XK_Up,   focusstack,     {.i = +1 } },
+	{ MODKEY,                       XK_Down,  focusstack,     {.i = -1 } },
 };
 
 /* button definitions */
