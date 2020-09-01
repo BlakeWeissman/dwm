@@ -41,8 +41,9 @@ static const int resizehints = 0;    /* 1 means respect size hints in tiled resi
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "tile",      tile },    /* first entry is default */
-	{ "desktop",      NULL },    /* no layout function means floating behavior */
+/*	{ "desktop",      NULL },    /* no layout function means floating behavior */
 	{ "fullscreen",      monocle },
+	{ NULL,       NULL },
 };
 
 /* key definitions */
@@ -96,14 +97,15 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Up,  focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_b,			 togglebar,      {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
+	//{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_a,      setmfact,       {.f = -0.01} },
 	{ MODKEY,                       XK_d,      setmfact,       {.f = +0.01} },
 	{ MODKEY,                       XK_equal,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_minus,      incnmaster,     {.i = -1 } },
 	//{ MODKEY,                       XK_f,  setlayout,      {0} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[2]} },
+	//{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,												XK_space,	zoom,		{0} },
+	{ MODKEY,												XK_f, cyclelayout,    {.i = +1 } },
 	//TODO: Bind key to xkeys?
 	{ 0,														XK_Print,	spawn,	SHCMD("maim screenshots/pic-full-$(date '+%y%m%d-%H%M-%S').png") },
 };
