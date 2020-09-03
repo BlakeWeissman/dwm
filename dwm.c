@@ -873,7 +873,7 @@ expose(XEvent *e)
 void
 focus(Client *c)
 {
-	if (!c || !ISVISIBLE(c) || HIDDEN(c))
+	if (!c || !ISVISIBLE(c))
 		for (c = selmon->stack; c && (!ISVISIBLE(c) || HIDDEN(c)); c = c->snext);
 	if (selmon->sel && selmon->sel != c)
 		unfocus(selmon->sel, 0);
@@ -1908,14 +1908,11 @@ toggleview(const Arg *arg)
 void
 togglewin(const Arg *arg)
 {
-	Client *c = (Client*)arg->v;
-	if (c == selmon->sel)
-		hide(c);
+	Client *c = (Client*)selmon->sel;
+	if (HIDDEN(c))
+		show(c);
 	else {
-		if (HIDDEN(c))
-			show(c);
-		focus(c);
-		restack(selmon);
+		hide(c);
 	}
 }
 
