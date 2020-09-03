@@ -764,7 +764,7 @@ void
 drawbar(Monitor *m)
 {
 	// tab width TODO: sw = width tabs take up, implement dynamic version
-	int x, tw, w, sw = 444, n = 0, scm;
+	int x, tw, w, sw = 0, n = 0, scm;
 	int boxs = drw->fonts->h / 9;
 	int boxw = drw->fonts->h / 6 + 2;
 	unsigned int i, occ = 0, urg = 0;
@@ -798,7 +798,7 @@ drawbar(Monitor *m)
 	w = blw = TEXTW(m->ltsymbol);
 	drw_setscheme(drw, scheme[SchemeNorm]);
 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
-	if ((w = m->ww - sw - x) > bh) {
+	if ((w = m->ww - tw - x) > bh) {
 		if (n > 0) {
 			int remainder = w % n;
 			int tabw = (1.0 / (double)n) * w + 1;

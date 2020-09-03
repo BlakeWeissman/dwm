@@ -108,7 +108,7 @@ static Key keys[] = {
 	{ MODKEY,												XK_space,	zoom,		{0} },
 	{ MODKEY,												XK_f,  cyclelayout,    {.i = -1 } },
 	//TODO: Bind key to xkeys?
-	{ 0,														XK_Print,	spawn,	SHCMD("maim Screenshots/pic-full-$(date '+%y%m%d-%H%M-%S').png") },
+	{ 0,														XK_Print,	spawn,	SHCMD("maim pictures/Screenshots/pic-full-$(date '+%y%m%d-%H%M-%S').png") },
 };
 
 /* button definitions */
