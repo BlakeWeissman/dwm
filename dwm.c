@@ -763,7 +763,6 @@ dirtomon(int dir)
 void
 drawbar(Monitor *m)
 {
-	// tab width TODO: sw = width tabs take up, implement dynamic version
 	int x, tw, w, sw = 0, n = 0, scm;
 	int boxs = drw->fonts->h / 9;
 	int boxw = drw->fonts->h / 6 + 2;
