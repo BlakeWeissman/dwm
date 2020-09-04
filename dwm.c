@@ -875,6 +875,31 @@ expose(XEvent *e)
 void
 focus(Client *c)
 {
+	if (!c || !ISVISIBLE(c) || HIDDEN(c))
+		for (c = selmon->stack; c && (!ISVISIBLE(c) || HIDDEN(c)); c = c->snext);
+	if (selmon->sel && selmon->sel != c)
+		unfocus(selmon->sel, 0);
+	if (c) {
+		if (c->mon != selmon)
+			selmon = c->mon;
+		if (c->isurgent)
+			seturgent(c, 0);
+		detachstack(c);
+		attachstack(c);
+		grabbuttons(c, 1);
+		XSetWindowBorder(dpy, c->win, scheme[SchemeSel][ColBorder].pixel);
+		setfocus(c);
+	} else {
+		XSetInputFocus(dpy, root, RevertToPointerRoot, CurrentTime);
+		XDeleteProperty(dpy, root, netatom[NetActiveWindow]);
+	}
+	selmon->sel = c;
+	drawbars();
+}
+
+void
+focustab(Client *c)
+{
 	if (!c || !ISVISIBLE(c))
 		for (c = selmon->stack; c && (!ISVISIBLE(c) || HIDDEN(c)); c = c->snext);
 	if (selmon->sel && selmon->sel != c)
@@ -968,7 +993,7 @@ focustabstack(const Arg *arg)
 					c = i;
 	}
 	if (c) {
-		focus(c);
+		focustab(c);
 		restack(selmon);
 	}
 }
@@ -1102,7 +1127,7 @@ hide(Client *c) {
 	XSelectInput(dpy, w, ca.your_event_mask);
 	XUngrabServer(dpy);
 
-	focus(c->snext);
+	focus(c->next);
 	arrange(c->mon);
 }
 

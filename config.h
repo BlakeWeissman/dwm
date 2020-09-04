@@ -112,6 +112,7 @@ static Key keys[] = {
 	{ MODKEY,												XK_space,	zoom,		{0} },
 	{ MODKEY,												XK_f,  cyclelayout,    {.i = -1 } },
 	{ MODKEY,												XK_m,  toggleclient,    {0} },
+	{ MODKEY|ShiftMask,							XK_m,  toggleclient,    {0} },
 	//TODO: Bind key to xkeys?
 	{ 0,														XK_Print,	spawn,	SHCMD("maim pictures/Screenshots/pic-full-$(date '+%y%m%d-%H%M-%S').png") },
 };
