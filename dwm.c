@@ -1127,7 +1127,6 @@ hide(Client *c) {
 	XSelectInput(dpy, w, ca.your_event_mask);
 	XUngrabServer(dpy);
 
-	focus(c->next);
 	arrange(c->mon);
 }
 
