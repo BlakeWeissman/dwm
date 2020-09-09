@@ -175,6 +175,7 @@ static void focus(Client *c);
 static void focusin(XEvent *e);
 static void focusmon(const Arg *arg);
 static void focusstack(const Arg *arg);
+static void focustabstack(const Arg *arg);
 static Atom getatomprop(Client *c, Atom prop);
 static int getrootptr(int *x, int *y);
 static long getstate(Window w);
@@ -224,6 +225,7 @@ static void togglefloating(const Arg *arg);
 static void toggletag(const Arg *arg);
 static void toggleview(const Arg *arg);
 static void togglewin(const Arg *arg);
+static void toggleclient(const Arg *arg);
 static void unfocus(Client *c, int setfocus);
 static void unmanage(Client *c, int destroyed);
 static void unmapnotify(XEvent *e);
@@ -895,6 +897,31 @@ focus(Client *c)
 	drawbars();
 }
 
+void
+focustab(Client *c)
+{
+	if (!c || !ISVISIBLE(c))
+		for (c = selmon->stack; c && (!ISVISIBLE(c) || HIDDEN(c)); c = c->snext);
+	if (selmon->sel && selmon->sel != c)
+		unfocus(selmon->sel, 0);
+	if (c) {
+		if (c->mon != selmon)
+			selmon = c->mon;
+		if (c->isurgent)
+			seturgent(c, 0);
+		detachstack(c);
+		attachstack(c);
+		grabbuttons(c, 1);
+		XSetWindowBorder(dpy, c->win, scheme[SchemeSel][ColBorder].pixel);
+		setfocus(c);
+	} else {
+		XSetInputFocus(dpy, root, RevertToPointerRoot, CurrentTime);
+		XDeleteProperty(dpy, root, netatom[NetActiveWindow]);
+	}
+	selmon->sel = c;
+	drawbars();
+}
+
 /* there are some broken focus acquiring clients needing extra handling */
 void
 focusin(XEvent *e)
@@ -927,6 +954,32 @@ focusstack(const Arg *arg)
 	if (!selmon->sel)
 		return;
 	if (arg->i > 0) {
+		for (c = selmon->sel->next; c && (!ISVISIBLE(c) || (arg->i == 1 && HIDDEN(c))); c = c->next);
+		if (!c)
+			for (c = selmon->clients; c && (!ISVISIBLE(c) || (arg->i == 1 && HIDDEN(c))); c = c->next);
+	} else {
+		for (i = selmon->clients; i != selmon->sel; i = i->next)
+			if (ISVISIBLE(i) && !(arg->i == -1 && HIDDEN(i)))
+				c = i;
+		if (!c)
+			for (; i; i = i->next)
+				if (ISVISIBLE(i) && !(arg->i == -1 && HIDDEN(i)))
+					c = i;
+	}
+	if (c) {
+		focus(c);
+		restack(selmon);
+	}
+}
+
+void
+focustabstack(const Arg *arg)
+{
+	Client *c = NULL, *i;
+
+	if (!selmon->sel)
+		return;
+	if (arg->i > 0) {
 		for (c = selmon->sel->next; c && !ISVISIBLE(c); c = c->next);
 		if (!c)
 			for (c = selmon->clients; c && !ISVISIBLE(c); c = c->next);
@@ -940,7 +993,7 @@ focusstack(const Arg *arg)
 					c = i;
 	}
 	if (c) {
-		focus(c);
+		focustab(c);
 		restack(selmon);
 	}
 }
@@ -1074,7 +1127,6 @@ hide(Client *c) {
 	XSelectInput(dpy, w, ca.your_event_mask);
 	XUngrabServer(dpy);
 
-	focus(c->snext);
 	arrange(c->mon);
 }
 
@@ -1399,6 +1451,14 @@ resizeclient(Client *c, int x, int y, int w, int h)
 	c->oldw = c->w; c->w = wc.width = w;
 	c->oldh = c->h; c->h = wc.height = h;
 	wc.border_width = c->bw;
+	if (((nexttiled(c->mon->clients) == c && !nexttiled(c->next))
+	    || &monocle == c->mon->lt[c->mon->sellt]->arrange)
+	    && !c->isfullscreen && !c->isfloating
+	    && NULL != c->mon->lt[c->mon->sellt]->arrange) {
+		c->w = wc.width += c->bw * 2;
+		c->h = wc.height += c->bw * 2;
+		wc.border_width = 0;
+	}
 	XConfigureWindow(dpy, c->win, CWX|CWY|CWWidth|CWHeight|CWBorderWidth, &wc);
 	configure(c);
 	XSync(dpy, False);
@@ -1914,6 +1974,17 @@ togglewin(const Arg *arg)
 	else {
 		hide(c);
 	}
+}
+
+void
+toggleclient(const Arg *arg)
+{
+	Client *c = (Client*)selmon->sel;
+	if (HIDDEN(c))
+		show(c);
+ 	else {
+		hide(c);
+ 	}
 }
 
 void
